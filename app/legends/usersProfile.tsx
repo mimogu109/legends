@@ -1,21 +1,42 @@
+"use client";
+
 import Link from "next/link";
 import { useState } from "react";
 
-export default function Michael() {
+export interface usersProfile {
+  id: number;
+  profile: string;
+}
+
+export interface usersTable {
+  name: string;
+  id: string;
+  profile?: usersProfile[];
+}
+
+type usersTableListProps = {
+  usersTables: usersTable[];
+};
+
+export default function UsersProfile({usersTables}: usersTableListProps) {
   const [count, setCount] = useState(0);
   return (
     <div
-      className="bg-gradient-to-br from-blue-400 via-blue-500 to-blue-700 min-h-screen flex items-center justify-center"
+      className=" min-h-screen flex items-center justify-center"
       style={{ fontFamily: "Bahnschrift, Arial, sans-serif" }}
     >
       <div className="bg-white/90 rounded-2xl shadow-2xl p-20 max-w-3xl w-full">
         <h1 className="text-4xl font-bold text-blue-700 mb-10 text-center drop-shadow">
-          Michael Imogu
+          {usersTables.length > 0 ? usersTables[0].name : "No user found"}
         </h1>
         <div className="mb-8 space-y-4 text-lg text-gray-700">
-          <p>Michael Imogu is a 12 year old. He goes to Dowen College, one of the best schools in the world.</p>
-          <p>He is the person that typed what you&apos;re reading now as well. He lives in Lagos, with his mom and dad, while his three sisters are abroad, working and schooling.</p>
-          <p>He is one of Jehovah&apos;s Witnesses. Also, I forgot to mention, he is in SS 0.5 - it&apos;s complicated.</p>
+         {usersTables.map((user, userIdx) =>
+           user.profile?.map((profileObj, profileIdx) => (
+             <div key={`${userIdx}-${profileIdx}`} className="bg-blue-50 rounded-lg p-4 shadow-inner">
+               <p className="text-blue-800 font-medium">{profileObj.profile}</p>
+             </div>
+           ))
+         )}
         </div>
         <div className="flex justify-center mb-10">
           <Link
