@@ -11,7 +11,7 @@ export interface usersProfile {
 export interface usersTable {
   name: string;
   id: string;
-  profile?: usersProfile[];
+  profile: usersProfile[];
 }
 
 type usersTableListProps = {
